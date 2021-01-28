@@ -1,7 +1,14 @@
 var inquirer = require('inquirer');
+var fs = require('fs');
 var Manager = require('./lib/Manager');
 var Engineer = require('./lib/Engineer');
 var Intern = require('./lib/Intern');
+var render = require('./src/renderPage');
+const path = require("path");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
+
+const teamMembers = [];
 
 function addManager() {
     inquirer.prompt([
@@ -65,6 +72,7 @@ function addManager() {
     ]).then((answers) => {
         const manager = new Manager(answers.manager,answers.managerId,answers.managerEmail, answers.managerOfficeNumber);
         console.log(manager);
+        teamMembers.push(manager);
         addTeamMember();
       });
     };
@@ -87,9 +95,10 @@ function addTeamMember() {
             break;
             default:
             console.log("Team profile completed!")
+            var teamPage = render(teamMembers);
+            fs.writeFileSync(outputPath, teamPage);
         }
     })
-};
 
 function addEngineer() {
     inquirer.prompt([
@@ -151,6 +160,7 @@ function addEngineer() {
     ]).then(answers => {
         const engineer = new Engineer(answers.engineer,answers.engineerId,answers.engineerEmail, answers.engineerGithub);
         console.log(engineer);
+        teamMembers.push(engineer);
         addTeamMember();
     });
 };
@@ -215,9 +225,10 @@ function addIntern(){
     ]).then(answers => {
         const intern = new Intern(answers.intern, answers.internId, answers.internEmail, answers.school);
         console.log(intern);
+        teamMembers.push(intern);
         addTeamMember();
     })
 } 
 
-
+};
 
