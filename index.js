@@ -42,7 +42,7 @@ function addManager() {
         {
             type: "input",
             name: "managerEmail",
-            message: "What is your email address?",
+            message: "What is Manager's email address?",
             validate: function (email) {
       
                 valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
@@ -57,7 +57,7 @@ function addManager() {
         {
             type: "input",
             name: "managerOfficeNumber",
-            message: "What is your office number?",
+            message: "What is Manager's office number?",
             validate: answer => {
                 const pass= answer.match(
                     /^[1-9]\d*$/
